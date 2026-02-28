@@ -14,8 +14,6 @@ work equally well on Grid objects or any implicit graph.
 neighbor_fn signature:  node -> Iterable[(neighbor, cost)]
 """
 
-from __future__ import annotations
-
 import heapq
 from collections import defaultdict, deque
 from typing import (

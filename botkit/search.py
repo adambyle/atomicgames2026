@@ -19,8 +19,6 @@ Design notes
   pruning — this can make alpha-beta several times faster in practice.
 """
 
-from __future__ import annotations
-
 import math
 import time
 from typing import Any, Dict, Optional, Tuple
@@ -31,13 +29,14 @@ _INF = math.inf
 
 # Transposition table entry flags
 _EXACT = 0
-_LOWER = 1   # alpha cutoff (we had a beta-cut, stored a lower bound)
-_UPPER = 2   # beta  cutoff (stored an upper bound)
+_LOWER = 1  # alpha cutoff (we had a beta-cut, stored a lower bound)
+_UPPER = 2  # beta  cutoff (stored an upper bound)
 
 
 # ---------------------------------------------------------------------------
 # Core alpha-beta minimax
 # ---------------------------------------------------------------------------
+
 
 def _alphabeta(
     state: GameState,
@@ -113,6 +112,7 @@ def _alphabeta(
 # Public: minimax (fixed depth)
 # ---------------------------------------------------------------------------
 
+
 def minimax(
     state: GameState,
     depth: int,
@@ -161,6 +161,7 @@ def minimax(
 # ---------------------------------------------------------------------------
 # Public: minimax with iterative deepening + time budget
 # ---------------------------------------------------------------------------
+
 
 def minimax_timed(
     state: GameState,
@@ -250,7 +251,9 @@ def _minimax_root_with_deadline(
         if time.monotonic() >= deadline:
             return None, -_INF  # signal: incomplete search
         child = state.apply_action(action)
-        score = _alphabeta_deadline(child, depth - 1, alpha, beta, perspective, tt, deadline)
+        score = _alphabeta_deadline(
+            child, depth - 1, alpha, beta, perspective, tt, deadline
+        )
         if score is None:
             return None, -_INF  # propagate timeout
         if score > best_score:
@@ -305,7 +308,9 @@ def _alphabeta_deadline(
 
     for action in actions:
         child = state.apply_action(action)
-        val = _alphabeta_deadline(child, depth - 1, alpha, beta, perspective, tt, deadline)
+        val = _alphabeta_deadline(
+            child, depth - 1, alpha, beta, perspective, tt, deadline
+        )
         if val is None:
             return None  # propagate timeout
         if maximising:
@@ -317,6 +322,8 @@ def _alphabeta_deadline(
         if alpha >= beta:
             break
 
-    flag = _UPPER if best_val <= orig_alpha else (_LOWER if best_val >= beta else _EXACT)
+    flag = (
+        _UPPER if best_val <= orig_alpha else (_LOWER if best_val >= beta else _EXACT)
+    )
     tt[zh] = {"depth": depth, "flag": flag, "value": best_val}
     return best_val

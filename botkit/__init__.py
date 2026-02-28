@@ -8,14 +8,19 @@ Modules:
   search     — minimax with alpha-beta pruning + iterative deepening
 """
 
-from .grid import Grid, Cell
-from .graph import Graph, bfs, dijkstra, astar
 from .gamestate import GameState
+from .graph import Graph, astar, bfs, dijkstra
+from .grid import Cell, Grid
 from .search import minimax, minimax_timed
 
 __all__ = [
-    "Grid", "Cell",
-    "Graph", "bfs", "dijkstra", "astar",
+    "Grid",
+    "Cell",
+    "Graph",
+    "bfs",
+    "dijkstra",
+    "astar",
     "GameState",
-    "minimax", "minimax_timed",
+    "minimax",
+    "minimax_timed",
 ]

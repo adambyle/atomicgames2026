@@ -9,8 +9,6 @@ Features:
   - numpy backend when available (falls back to list-of-lists)
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Any, Callable, Generator, Iterable, Optional
 

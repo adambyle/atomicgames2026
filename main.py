@@ -1,3 +1,4 @@
 import botkit
 
-print(botkit)
+_ = botkit
+print("Hello, botkit")
